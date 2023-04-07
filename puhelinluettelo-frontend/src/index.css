@@ -1,0 +1,21 @@
+h1, h2 {
+    color: green;
+    font-style: italic;
+  }
+
+li {
+    color: grey;
+    padding-top: 5px;
+    font-size: 15px;
+    padding: 3px;
+  }
+
+.notification {
+    background: lightgrey;
+    font-size: 20px;
+    font-weight: bold;
+    border-style: 'solid';
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
