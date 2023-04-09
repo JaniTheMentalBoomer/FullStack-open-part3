@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const mongoose = require('mongoose')
 
 if (process.argv.length<3) {
@@ -22,21 +23,21 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema)
 
-const person = new Person({ 
-    name: personName,
-    number: personNumber
+const person = new Person({
+  name: personName,
+  number: personNumber
 })
 
 if(process.argv.length > 3){
-    person.save().then(result => {
-        console.log(`added ${personName} number: ${personNumber} to phonebook`)
-        mongoose.connection.close()
-    })
+  person.save().then(result => {
+    console.log(`added ${personName} number: ${personNumber} to phonebook`)
+    mongoose.connection.close()
+  })
 }
 
 if(process.argv.length === 3){
-console.log('Phonebook:')
-Person.find({}).then(result => {
+  console.log('Phonebook:')
+  Person.find({}).then(result => {
     result.forEach(person => {
       console.log(`${person.name} ${person.number}`)
     })
