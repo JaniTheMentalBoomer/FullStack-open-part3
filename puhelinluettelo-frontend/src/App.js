@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
-import peopleService from './services/people'
 import Notification from './components/Notification'
+import peopleService from './services/people'
+
 
 const App = () => {
     const [persons, setPersons] = useState([])
@@ -58,14 +59,21 @@ const App = () => {
         else {
             peopleService
             .create(personObject)
-            .then(returnedNote => {
-            setPersons(persons.concat(returnedNote))
+            .then(returnedPerson => {
+            setPersons(persons.concat(returnedPerson))
             setNewName('')
             setNewNumber('')
             setNotification('Yhteystieto lisätty onnistuneesti!')
             setTimeout(() => {
                 setNotification(null)
             }, 6000)
+            })
+            .catch(error => {
+                console.log(error.response.data.error)
+                setNotification(`VIRHE: ${error.response.data.error}`)
+                setTimeout(() => {
+                    setNotification(null)
+                }, 6000)
             })
         }
     }
@@ -78,7 +86,7 @@ const App = () => {
         console.log(personId)
         if (window.confirm(`Poistetaanko yhteystieto: ${targetName}`)) {
             peopleService
-                .removePerson(personId).then(returnedNote => {
+                .removePerson(personId).then(returnedPerson => {
                     setPersons(persons.filter(p => p.id !== personId))
                 })
                 .catch(error => {
@@ -98,12 +106,10 @@ const App = () => {
       }
 
     const handleNameChange = (event) => {
-        console.log(event.target.value)
         setNewName(event.target.value)
     }
 
     const handleNumberChange = (event) => {
-        console.log(event.target.value)
         setNewNumber(event.target.value)
     }
 
